@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Gallus Insights | Data Visualization Tool</title>
+    <meta name="description" content="Gallus Insights is an advanced analytics firm focused on helping companies unlock the power of data for better management decisions.">
+    <meta name="keywords" content="mortgage, analytics, Gallus Insights">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Luca Borletti">
+    <link rel="icon" href="assets/black-icon-circle.png"> 
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <script src="./js_files/jquery.min.js"></script>
+    <script src='https://unpkg.com/@thoughtspot/visual-embed-sdk/dist/tsembed.js'></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons&family=Monoton&family=Bungee+Outline&family=Roboto:wght@400;500;700&family=Faster+One&family=Plaster&display=swap" rel="stylesheet">
+
+    <script>
+        // ThoughtSpot SERVER
+        let tsHost = "https://gallus.thoughtspot.cloud";
+
+        // IDs
+        let defaultLiveboardId = "95341b9c-cfb0-496b-a115-78768b8add83";
+        let defaultLiveboardDescription = "Market Overview"
+
+        let rocketLiveboardId = "be491a05-9ecc-4fa2-9e0f-77f6e0ce1aae";
+        let individualLenderLiveboardId = "247aa169-59c9-4e33-a844-635d989df471";
+        
+        let chartWorkSheet1 = "f5824e20-39d3-486a-954d-c90bbfcd2ffc";
+        let chartTML1 = "[Loan amount] [Company] top 5";
+        
+        let chartWorkSheet2 = "15a1ee2a-f19e-430f-9db0-98b987ae0f63";
+        let chartTML2 = '[Net Income Attributable To Rocket Companies] [Net Income Impact From Pro Forma Conversion Of Class D Common Shares To Class A Common Shares (a)] [Adjustment To The Provision For Income Tax (b)] [Tax-effected Net Income] [Share-based Compensation Expense] [Change In Fair Value Of Msrs Due To Valuation Assumptions (net Of Hedges) (c)] [Loss On Extinguishment Of Senior Notes] [Litigation Accrual (d)] [Change In Tax Receivable Agreement Liability (e)] [Other Tax Adjustments (g)] [Tax Impact Of Adjustments (f)] [Adjusted Net Income] 2021';
+
+        let chartWorkSheet3 = "339ad157-b865-499f-8b90-442d3bbc79d6";
+        let chartTML3 = "[Revenue Gain On Sale Of Loans Excluding Fair Value Of Msrs, Net] [Revenue Fair Value Of Originated Msrs] [Revenue Servicing Fee Income] [Revenue Changes In Valuation Model Inputs Or Assumptions, Net Hedge] [Revenue Collection/realization Of Cash Flows] [Revenue Interest Income] [Revenue Interest Expense On Funding Facilities] [Revenue Other Income] [Total Revenue] [My Date].2021 [Expenses Salaries, Commissions, And Team Member Benefits] [Expenses General And Administrative Expenses] [Expenses Marketing And Advertising Expenses] [Expenses Depreciation And Amortization] [Expenses Interest And Amortization Expense On Non-funding Debt] [Expenses Other Expenses] [Taxes Provision For Income Taxes] [Net Income]";
+
+        /* 
+        * Define the items you want in the Analytics menu here.
+        * 'name' property is the visible menu item text
+        * Available types: ['liveboard', 'visualization', 'answer', 'search']
+        * vizGuid is only used for 'visualization' type, leave null othewise
+        * guid for 'search' is a data source (worksheet)
+        * description will not display if set to null
+        */
+
+    //    var homeItems = [
+        //    {
+        //         'name': 'Sign up',
+        //         'overridingImage' : 'person',
+        //         // 'id' : ''
+        //    },
+        //    {
+        //         'name': 'Login',
+        //         'overridingImage' : 'person_add',
+        //    },
+    //        {
+    //             'name': 'Logout',
+    //             'overridingImage' : 'exit_to_app',
+    //        }
+    //    ]
+
+       var menuItems = [
+            {    
+                'name': 'Market Analytics', 
+                'type': 'dropdown',
+                'overridingImage' : 'bar_chart',
+                'contents' : [
+                    {    
+                        'name': 'Market Overview', 
+                        'type': 'liveboard', 
+                        'guid': defaultLiveboardId, 
+                        'description': 'Market Overview',
+                        'overridingImage' : "visibility",
+                    },
+                    {    
+                        'name': 'Individual Lender', 
+                        'type': 'liveboard', 
+                        'guid': individualLenderLiveboardId, 
+                        'description': 'Individual Lender',
+                        'overridingImage' : 'person'
+                    },
+                ],
+            },
+            {    
+                'name': 'Rocket Companies', 
+                'type': 'dropdown',
+                'overridingImage' : 'group',
+                'contents' : [
+                    {
+                        'name': 'Rocket Overview', 
+                        'type': 'liveboard', 
+                        'guid': "24911eca-17b6-4bc7-b37a-cc3b28746f81", 
+                        'description': "Rocket Overview",
+                        'overridingImage' : 'visibility'
+                    },
+                    {
+                        'name': 'Rocket Profitability', 
+                        'type': 'liveboard', 
+                        'guid': "bde3ce68-5bd7-446a-9cf8-2c483b560853", 
+                        'description': "Rocket Profitability",
+                        'overridingImage' : 'monetization_on'
+                    },
+                    {
+                        'name': 'Rocket Balance Sheet', 
+                        'type': 'liveboard', 
+                        'guid': "47862e9a-ceb5-42a9-acee-b0216b3f9fdb", 
+                        'description': "Rocket Balance Sheet",
+                        // 'overridingImage' : 'description'
+                        'overridingImage' : 'photo_camera'
+                    },
+                    {
+                        'name': 'Rocket Cash Flows & Liquidity', 
+                        'type': 'liveboard', 
+                        'guid': "5c9aef32-61f9-4624-be46-eb2d5419d67a", 
+                        'description': "Rocket Cash Flows & Liquidity",
+                        'overridingImage' : 'compare_arrows'
+                    },
+                    {
+                        'name': 'Rocket Servicing Overview', 
+                        'type': 'liveboard', 
+                        'guid': "4ec73cf6-0939-4bd1-a868-ab44c35dede2", 
+                        'description': "Rocket Servicing Overview",
+                        'overridingImage' : 'perm_data_setting'
+                    },
+                    {
+                        'name': 'Long Term Trends', 
+                        'type': 'liveboard', 
+                        'guid': "d7cb23ad-98a2-49e2-b7ea-60423c2d6a4a", 
+                        'description': "Long Term Trends",
+                        // 'overridingImage' : 'timeline'
+                        'overridingImage' : 'insert_chart'
+                    },
+                    {
+                        'name': 'Adjusted Net Income', 
+                        'type': 'chart', 
+                        'guid': chartWorkSheet2, 
+                        'chartTML': chartTML2,
+                        'description': 'Adjusted Net Income 2021',
+                        'overridingImage' : "multiline_chart"
+                    },
+                    {
+                        'name': 'Income Statement', 
+                        'type': 'chart', 
+                        'guid': chartWorkSheet3, 
+                        'chartTML': chartTML3,
+                        'description': 'Income Statement 2021',
+                        'overridingImage' : "trending_up"
+                    },
+                ],
+            },
+            {    
+                'name': 'Search', 
+                'overridingImage' : 'search',
+                'type': 'search', 
+                'guid': 'f5824e20-39d3-486a-954d-c90bbfcd2ffc', 
+                'description': "Gallus Explore",
+            },
+            // {    
+            //     'name': 'Search', 
+            //     'type': 'dropdown',
+            //     'overridingImage' : 'search',
+            //     'contents' : [
+            //         {
+            //             'name': 'Search', 
+            //             'type': 'search', 
+            //             'guid': 'f5824e20-39d3-486a-954d-c90bbfcd2ffc', 
+            //             'description': "Gallus Explore",
+            //             'overridingImage' : "subject"
+            //         },
+            //     ],
+            // },
+       ];
+    </script>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <div id='header'>
+        <h1>GALLUS INSIGHTS</h1>
+        <a>
+            <img src="assets/white-icon-large.png" alt="" class="logo" id="logo">
+        </a>
+    </div>
+
+
+    <!-- MAIN PAGE: SIDEBAR + EMBED -->
+    <div id='page-content-div' style='display: flex;'>
+        <!-- SIDEBAR -->
+        <div id='sidebar'>
+            <!-- HOME -->
+            <span class="wrapper">
+                <span class='category material-icons'>home</span>
+                <h3>&ensp;Home</h3>
+            </span>
+                <ul class="menu-1"></ul>
+                <!-- <div class="menu-category">
+                </div> -->
+                
+                <!-- <input type="checkbox" id="animation1">
+                <label for="animation1">
+                    <div class="arrow"></div>
+                </label> -->
+                <hr/>
+            
+            <!-- ANALYTICS -->
+            <span class="wrapper">
+            <span class='category material-icons'>dashboard</span>
+            <h3>&ensp;Analytics</h3>
+            </span>
+                <!-- <div class="menu-category">
+                </div> -->
+                <ul id='menu-2'></ul> 
+                <!-- <hr/> -->
+        </div>
+
+        <!-- EMBED -->
+        <div id='main-content-div' style='flex: 3 3 0;'>
+            <!-- <div id="no-data"></div> -->
+
+            <!-- DESCRIPTION -->
+            <div id='description' style='display:none'></div>
+
+            <!-- LOADER (optional) -->
+            <!-- <div id="loader"><img src="./assets/black-icon-large.png" alt=""></div> -->
+
+            <!-- EMBED COMPONENT -->
+            <div id='embed'></div>
+        </div>
+</div>
+
+<!-- THOUGHTSPOT CONNECTION -->
+<script type='module' src="js_files/ts.mjs"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+</body>
+</html>

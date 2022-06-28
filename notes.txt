@@ -1,0 +1,62 @@
+so maybe what i want is a little carrot up top that minimizes and expands the sidemenu
+
+Maybe now make a dropdown option at top along with title and the icon 
+and then embed a list in the structure and make that function recurse into it
+
+
+
+<!-- ATTEMPTING TO INSECURELY ACCESS AN IFRAME'S BODY FROM DIFFERENT ORIGIN -->
+<!-- <script>
+    //    var intervalId = window.setInterval(function(){
+            // let iframes = document.getElementsByTagName('iframe');
+            // console.log(iframes);
+            // $(iframes[0]).load(function () {                        
+            //     frames["myframe"].document.body.innerHTML = htmlValue;
+            // });
+            // console.log(iframes.length);
+            // console.log(iframes[0]);
+            // console.log(iframes[0].contentWindow);
+            // console.log(iframes[0].contentWindow.document);
+            // console.log(iframes[1]);
+            // console.log(iframes[0].firstChild);
+            // console.log(iframes[0].contentDocument);
+            // console.log(iframes[0].contentWindow.document);
+        // }, 3000);
+    //    let embedElement = document.getElementById("embed");
+    //    let iframe = embedElement.childNodes[0];
+        // window.onload = function() {
+        //     let iframes = document.getElementsByTagName('iframe');
+        //     console.log(iframes);
+        //     console.log(iframes.length);
+        //     if (iframes.length > 0) {
+        //         console.log(iframe);
+        //         let iframe = iframes[0];
+        //     }
+        // }
+    //    let iframeDocument = iframe.contentDocument firstChild iframe.contentWindow.document;
+    //    let iframeDoc = iframe.firstChild
+    //    .style.display = "none";
+    //    iframe.style.display = "none";
+    $(function() {
+        let embedElement = document.getElementById("embed");
+        embedElement.style.display = "none";
+        if (embedElement.hasChildNodes()) {
+            let iframe = embedElement.childNodes[0];
+            // iframe.remove();
+            // var iframeDocument = iframe.contentDocument firstChild iframe.contentWindow.document;
+            // if (!iframeDocument) {
+            //     throw "iframe couldn't be found in DOM.";
+            // }
+        }
+    });
+    // iframedoc.parentNode.removeChild(iframedoc);
+    // let iframedoc = document.getElementsByClassName("js-focus-visible");
+    // let powered = iframedoc.getElementsByClassName("bk-footer-logo-image");
+    // powered.parentNode.removeChild(powered);
+</script> -->
+<!-- <script>
+    function toggleSidebar() {
+        var sidebar = getElementById("sidebar");
+        sidebar.classList.remove("sidebar");
+    }
+</script> -->
